@@ -9,10 +9,12 @@ from utils.utils import logits_to_entropy, mask_pad
 
 class Policy:
     def __init__(self, model_name, temperature, device, reward_cond=False, tree_tokens=None):
-        self.model = GPT2LMHeadModel.from_pretrained(model_name)
+        self.model = GPT2LMHeadModel.from_pretrained(model_name, cache_dir="/nlp/scr/lxuechen/cache")
         self.device = device
 
-        self.tokenizer = GPT2Tokenizer.from_pretrained(model_name, pad_token="<|endoftext|>")
+        self.tokenizer = GPT2Tokenizer.from_pretrained(
+            model_name, pad_token="<|endoftext|>", cache_dir="/nlp/scr/lxuechen/cache"
+        )
         self.model.config.pad_token_id = self.tokenizer.pad_token_id
 
         if reward_cond:

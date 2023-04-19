@@ -39,8 +39,8 @@ generations_df = pd.read_json(generations_file, lines=True)
 
 # calculate fluency
 device = "cuda" if torch.cuda.is_available() else "cpu"
-eval_model = AutoModelForCausalLM.from_pretrained('gpt2-xl').to(device)
-eval_tokenizer = AutoTokenizer.from_pretrained('gpt2-xl')
+eval_model = AutoModelForCausalLM.from_pretrained('gpt2-xl', cache_dir="/nlp/scr/lxuechen/cache").to(device)
+eval_tokenizer = AutoTokenizer.from_pretrained('gpt2-xl', cache_dir="/nlp/scr/lxuechen/cache")
 print('model initialization done!')
 
 torch.cuda.empty_cache()
