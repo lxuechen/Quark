@@ -1,4 +1,4 @@
-name: quark
+name: lxuechen-quark
 channels:
   - pytorch
   - anaconda

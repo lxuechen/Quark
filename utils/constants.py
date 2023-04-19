@@ -1,9 +1,8 @@
-from pathlib import Path
-import yaml
-
 NEGATIVE_INF = -100000.0
 
-PERSPECTIVE_API_KEY = 'YOUR_KEY'
+with open('.perspective_api_key', 'r') as f:
+    key = f.read().strip()
+PERSPECTIVE_API_KEY = key
 
 PERSPECTIVE_API_ATTRIBUTES = {
     'TOXICITY'
