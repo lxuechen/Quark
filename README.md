@@ -19,7 +19,7 @@ Please refer to their website for API key application.
 Please first replace `PERSPECTIVE_API_KEY` in [constants.py](utils/constants.py) with your own API key.
 For training quark for toxicity reduction with default hyperparameters,
 ```
-python main.py
+python main.py --output-dir "/nlp/scr/lxuechen/tests/quark"
 ```
 You can change hyperparameters in [arguments.py](arguments.py) via argparse.
 
