@@ -1,4 +1,6 @@
 import os
+import sys
+
 import torch
 import json
 import time
@@ -28,8 +30,9 @@ log = logging.getLogger(__name__)
 
 
 class PromptDataset(Dataset):
-    def __init__(self, path):
+    def __init__(self, path, max_instances=sys.maxsize):
         self.prompts = [json.loads(s.strip())["prompt"]["text"].strip() for s in open(path, 'r').readlines()]
+        self.prompts = self.prompts[:max_instances]
 
     def __len__(self):
         return len(self.prompts)
@@ -238,6 +241,7 @@ class ConditionTrainer:
         self.eval(step=step_num)
 
     def loss(self, step, query_input_ids, query_mask, response_input_ids, response_mask):
+        print(self.tree_tokens)
         outputs = self.policy.forward_pass(query_input_ids, query_mask, response_input_ids, response_mask)
         lm_loss, logprobs, entropy, logits = outputs['response/lm_loss'], outputs['response/log_prob'], \
                                              outputs['response/entropy'], outputs['response/logits']
@@ -384,7 +388,7 @@ def main():
     log.info(f'Initialization done!')
 
     prompt_collator = PromptCollator(tokenizer=policy.tokenizer)
-    train_dataset = PromptDataset(path=args.dataset_train)
+    train_dataset = PromptDataset(path=args.dataset_train, max_instances=args.train_max_instances)
     train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, drop_last=True, collate_fn=prompt_collator)
     log.info(f'Load train set with {len(train_dataset)} examples')
 

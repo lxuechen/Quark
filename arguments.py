@@ -82,6 +82,9 @@ def get_args():
         '--cuda-deterministic', action='store_false', default=True,
         help="sets flags for determinism when using CUDA (potentially slow!)")
 
+    # lxuechen
+    parser.add_argument('--train_max_instances', default=500)
+
     args = parser.parse_args()
     args.cuda = torch.cuda.is_available()
 
